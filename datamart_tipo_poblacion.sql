@@ -36,19 +36,20 @@ create table Resultado
     Foreign key (Id_raza ) references Raza(id_raza)
 );
 
-
-
 #----------------------------------------------------------------------------
 #                  CONSULTAS DESDE EL DATA WAREHOUSE
 #----------------------------------------------------------------------------
 
 ##DATOS PARA TABLA PARTIDO
+insert into Partido (Nombre_Partido, Partido)
 select Nombre_Partido, Partido from Partido;
 
 ##DATOS PARA TABLA RAZA
-select RAZA from Raza;
+insert into Raza (RAZA)
+SELECT RAZA FROM Raza;
 
 ##DATOS PARA TABLA RESULTADO
+Insert into Resultado(Analafabetas, Primaria, Nivel_Medio, Universitarios, Id_Partido, id_raza)
 select Analafabetas, Primaria, Nivel_Medio, Universitarios,Id_Partido, Id_Raza from  Resultado;
 
 
