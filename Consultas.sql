@@ -1,9 +1,4 @@
-/*
-Consultas
-
-#1 Consulta 1
-Porcentaje de Mujeres universitarias que votaron
-*/
+use DATAWAREHOUSE;
 select p.nombre_Pais                                            Pais,
                 d.nombre_Departamento                                          Departamento,
                 Sexo.Sexo Sexo,
@@ -18,10 +13,8 @@ select p.nombre_Pais                                            Pais,
            where Sexo.Sexo='mujeres'
 
          group by p.nombre_Pais, d.nombre_Departamento,Sexo.Sexo
-         order by p.nombre_pais
-/*
-Consulta 2 Porcentaje Hombres que votaron  por Departamento
-*/
+         order by p.nombre_pais;
+use DATAWAREHOUSE;
 
 select p.nombre_Pais                                            Pais,
                 d.nombre_Departamento                                          Departamento,
@@ -37,12 +30,9 @@ select p.nombre_Pais                                            Pais,
            where Sexo.Sexo='hombres'
 
          group by p.nombre_Pais, d.nombre_Departamento,Sexo.Sexo
-         order by p.nombre_pais
+         order by p.nombre_pais;
 
-/*Consulta 3
-
-Porcentaje de Votos Alfabetas por Region
-*/
+use DATAWAREHOUSE;
 select total1.Pais,total1.Region , total1.SUMA/total2.nDepartamentos as PromedioVotos
 from (
          select p.nombre_Pais                                            Pais,
@@ -70,14 +60,9 @@ from (
 
      on total1.Pais= total2.Pais and total1.Region = total2.Region
 
-   order by total1.Pais
+   order by total1.Pais;
 
-
-   
-/*Consulta 4
-
-Porcentaje de Votos Analfabetas por Region
-*/
+use DATAWAREHOUSE;
 
 select total1.Pais,total1.Region , total1.SUMA/total2.nDepartamentos as PromedioVotos
 from (
@@ -106,10 +91,8 @@ from (
 
      on total1.Pais= total2.Pais and total1.Region = total2.Region
 
-   order by total1.Pais
-/*Consulta 5
-Cantidad de mujeres analafabetas por pais
-*/
+   order by total1.Pais;
+use DATAWAREHOUSE;
 
 select total1.Pais,total1.SUMA AS MUJERES_ANALFABETAS  from (
 
@@ -150,14 +133,9 @@ select p.nombre_Pais                                            Pais,
 
       group by p.nombre_Pais
       order by p.nombre_Pais) as total2
-WHERE total1.Pais=total2.Pais
+WHERE total1.Pais=total2.Pais;
 
-
-/*
-#Consulta 6
-Cantidad de Hombres analfetas por pais*/
-
-
+use DATAWAREHOUSE;
 select total1.Pais,total1.SUMA AS MUJERES_ANALFABETAS  from (
 
 select p.nombre_Pais                                            Pais,
@@ -197,14 +175,10 @@ select p.nombre_Pais                                            Pais,
 
       group by p.nombre_Pais
       order by p.nombre_Pais) as total2
-WHERE total1.Pais=total2.Pais
+WHERE total1.Pais=total2.Pais;
 
 
-/*
-Consulta  7 
-
-Porcentaje de Mujeres Analfetas por PAIS
-*/
+use DATAWAREHOUSE;
 select total1.Pais, total1.SUMA*100/total2.SUMA  AS PORCENTAJE  from (
 
 select p.nombre_Pais                                            Pais,
@@ -244,13 +218,8 @@ select p.nombre_Pais                                            Pais,
 
       group by p.nombre_Pais
       order by p.nombre_Pais) as total2
-WHERE total1.Pais=total2.Pais
-/*
-Consulta 8 `Alfabetas 
-Porcentaje de Hombres analfetas por pais
-
-*/
-
+WHERE total1.Pais=total2.Pais ;
+use DATAWAREHOUSE;
 
 select total1.Pais, total1.SUMA*100/total2.SUMA  AS PORCENTAJE  from (
 
@@ -291,14 +260,10 @@ select p.nombre_Pais                                            Pais,
 
       group by p.nombre_Pais
       order by p.nombre_Pais) as total2
-WHERE total1.Pais=total2.Pais
+WHERE total1.Pais=total2.Pais;
 
 
-/*#Consulta 9 
-Cantidad de votos por departamento del pais Guatemala
-
-*/
-
+use DATAWAREHOUSE;
 select
     total1.Pais,
     total1.nombre_Departamento,
@@ -342,13 +307,8 @@ from (
             p.nombre_Pais
     ) as total2
 
-order by total1.nombre_Departamento
-/*
-#Consulta 10 
-Cantidad de  Votantes por departamento del pais Costa Rica
-
-*/
-
+order by total1.nombre_Departamento;
+use DATAWAREHOUSE;
 
 select
     total1.Pais,
@@ -393,4 +353,4 @@ from (
             p.nombre_Pais
     ) as total2
 
-order by total1.nombre_Departamento
+order by total1.nombre_Departamento;
