@@ -41,16 +41,16 @@ create table Resultado
 #----------------------------------------------------------------------------
 
 ##DATOS PARA TABLA PARTIDO
-insert into Partido (Nombre_Partido, Partido)
-select Nombre_Partido, Partido from Partido;
+insert into `DatamartPoblacion`.Partido (Nombre_Partido, Partido)
+select Nombre_Partido, Partido from `DATAWAREHOUSE`.Partido;
 
 ##DATOS PARA TABLA RAZA
-insert into Raza (RAZA)
-SELECT RAZA FROM Raza;
+insert into `DatamartPoblacion`.Raza (RAZA)
+SELECT RAZA FROM `DATAWAREHOUSE`.Raza;
 
 ##DATOS PARA TABLA RESULTADO
-Insert into Resultado(Analafabetas, Primaria, Nivel_Medio, Universitarios, Id_Partido, id_raza)
-select Analafabetas, Primaria, Nivel_Medio, Universitarios,Id_Partido, Id_Raza from  Resultado;
+Insert into `DatamartPoblacion`.Resultado(Analafabetas, Primaria, Nivel_Medio, Universitarios, Id_Partido, id_raza)
+select Analafabetas, Primaria, Nivel_Medio, Universitarios,Id_Partido, Id_Raza from `DATAWAREHOUSE`.Resultado;
 
 
 
