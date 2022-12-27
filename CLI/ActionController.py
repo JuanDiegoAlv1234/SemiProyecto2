@@ -77,7 +77,6 @@ class ActionController:
         self.print_handler(result)
         self.print_handler('Dataset loaded to Temporal')
 
-        return
         self.print_handler('Loading dataset to relational model')
         queries, errors = fill_er(self.conn)
         for q in queries:
@@ -104,7 +103,6 @@ class ActionController:
         ]
         for i in range(len(queries)):
             print(titles[i])
-            print(results[i])
             x = PrettyTable()
             for r in results[i]:
                 x.add_row(r)
