@@ -1,45 +1,20 @@
-USE `practica1`;
+CALL `DATAWAREHOUSE`.`LoadDataToModel`();
 
-INSERT INTO `practica1`.`artist` (`name`) SELECT DISTINCT t.artist FROM practica1.temporal t;
-INSERT INTO `practica1`.`genre` (`name`) SELECT DISTINCT t.genre FROM practica1.temporal t;
-INSERT INTO `practica1`.`song`
-(`energy`,
-`name`,
-`durationMs`,
-`year`,
-`popularity`,
-`danceability`,
-`llave`,
-`loudness`,
-`mode`,
-`speechiness`,
-`accousticness`,
-`instrumentalness`,
-`liveness`,
-`valence`,
-`tempo`,
-`explicit`,
-`Artist_idArtist`,
-`Genre_idGenre`)
-SELECT
-	t.energy,
-	t.song,
-    t.duration_ms,
-    t.year,
-    t.popularity,
-    t.danceability,
-    t.llave,
-    t.loudness,
-    t.mode,
-    t.speechiness,
-    t.acousticness,
-    t.instrumentalness,
-    t.liveness,
-    t.valence,
-    t.tempo,
-    t.explicit,
-	a.idArtist,
-    g.idGenre
-FROM practica1.temporal t
-LEFT JOIN artist a ON a.name = t.artist
-LEFT JOIN genre g ON g.name = t.genre;
+insert into Partido (Nombre_Partido, Partido)
+select Nombre_Partido, Partido from Partido;
+
+##DATOS PARA TABLA RAZA
+insert into Raza (RAZA)
+SELECT RAZA FROM Raza;
+
+##DATOS PARA TABLA RESULTADO
+Insert into Resultado(Analafabetas, Primaria, Nivel_Medio, Universitarios, Id_Partido, id_raza)
+select Analafabetas, Primaria, Nivel_Medio, Universitarios,Id_Partido, Id_Raza from  Resultado;
+
+
+select r.Id_r,r2.ID_Region,r.Id_Partido,p.ID_PAIS,r.Id_Eleccion from `DatamartPartidos`.Resultado r
+inner join `DatamartPartidos`.Municipio m on m.ID_m=r.Id_m
+inner join `DatamartPartidos`.Departamento d on m.ID_departamento=d.ID_Departamento
+inner join `DatamartPartidos`.Region r2 on r2.ID_Region=d.ID_REGION
+inner join `DatamartPartidos`.Pais p on r2.ID_PAIS=p.ID_PAIS
+INSERT INTO `DatamartPartidos`.resul_de_partidos_por_region(id_r,region_id_region,partido_id_partido,pais_id_pais,eleccion_id_eleccion)

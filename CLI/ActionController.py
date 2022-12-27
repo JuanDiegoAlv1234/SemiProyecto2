@@ -77,6 +77,7 @@ class ActionController:
         self.print_handler(result)
         self.print_handler('Dataset loaded to Temporal')
 
+        return
         self.print_handler('Loading dataset to relational model')
         queries, errors = fill_er(self.conn)
         for q in queries:
@@ -90,16 +91,16 @@ class ActionController:
 
     def query(self):
         errors, results, queries = query_er(self.conn)
-        titles = ['1. ',
-                  '2. ',
-                  '3. ',
-                  '4. Canción más reproducida de cada género',
-                  '5. Artista más reproducido de cada género',
-                  '6. Canción más reproducida de cada año',
-                  '7. TOP 10 artistas más populares',
-                  '8. TOP 10 canciones más populares',
-                  '9. TOP 5 géneros más populares',
-                  '10. Canción explicita más reproducida de cada año'
+        titles = ['1. ========================================',
+                  '2. ========================================',
+                  '3. ========================================',
+                  '4. ========================================',
+                  '5. ========================================',
+                  '6. ========================================',
+                  '7. ========================================',
+                  '8. ========================================',
+                  '9. ========================================',
+                  '10. ========================================'
         ]
         for i in range(len(queries)):
             print(titles[i])

@@ -1,5 +1,6 @@
 import pymysql
 import os
+import re
 from queries import DROP_TABLES, CREATE_TABLES, INSERT_DATA, QUERY_DATA
 
 mysql_config = {
@@ -54,24 +55,24 @@ def execute_queries(db_conn, queries, fetch=None):
             errors.append(result)
             continue
         results.append(result)
-    db_conn.commit()
     return errors, results
 
 
-def execute_query(db_conn, query, fetch=False):
+def execute_query(db_conn, query='', fetch=False):
     try:
         cursor = db_conn.cursor()
         if fetch:
             cursor.execute(query)
             result = cursor.fetchall()
-            print(cursor.description)
         else:
+
             result = cursor.execute(query)
     except Exception as e:
         return True, f'Could not perform {query}\n{e}'
     else:
         cursor.close()
 
+    db_conn.commit()
     return False, result
 
 
@@ -83,29 +84,27 @@ def fill_er(db_conn):
 
 def fill_temporal(db_conn, values):
     original_query = """
-    USE `practica1`;
-    INSERT INTO `practica1`.`temporal`
-    (`artist`,
-    `song`,
-    `duration_ms`,
-    `explicit`,
-    `year`,
-    `popularity`,
-    `danceability`,
-    `energy`,
-    `llave`,
-    `loudness`,
-    `mode`,
-    `speechiness`,
-    `acousticness`,
-    `instrumentalness`,
-    `liveness`,
-    `valence`,
-    `tempo`,
-    `genre`)
+    USE `DATAWAREHOUSE`;
+    INSERT INTO `DATAWAREHOUSE`.`temporal`
+    (
+    `nombre_eleccion`,
+    `anio_eleccion`,
+    `pais`,
+    `region`,
+    `Departamento`,
+    `Municipio`,
+    `Partido`,
+    `Nombre_paritdo`,
+    `Sexo`,
+    `Raza`,
+    `Analfabetos`,
+    `Alfabetos`,
+    `Primaria`,
+    `Nivel_Medio`,
+    `Universitarios`)
     VALUES
     """
-    batch_size = 500
+    batch_size = 1000
     batch_count = 0
     sql_values = ()
     count = 0
@@ -127,11 +126,10 @@ def fill_temporal(db_conn, values):
             sql_values = ()
             i = 0
 
-        query += """('%s','%s',%i,%r,%i,%f,%f,%f,%i,%f,%f,%f,%f,%f,%f,%f,%f,'%s'),\n"""
-        sql_values += (value.artist, value.song, value.duration_ms, value.explicit, value.year, value.popularity,
-                       value.danceability, value.energy, value.key, value.loudness, value.mode, value.speechiness,
-                       value.acousticness, value.instrumentalness, value.liveness, value.valence, value.tempo,
-                       value.genre)
+        query += """('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%i,%i,%i,%i,%i),\n"""
+        sql_values += (value.NOMBRE_ELECCION, value.ANIO_ELECCION, value.PAIS, value.REGION, value.DEPTO, value.MUNICIPIO,
+                       value.PARTIDO, value.NOMBRE_PARTIDO, value.SEXO, value.RAZA, value.ANALFABETOS, value.ALFABETOS,
+                       value.PRIMARIA, value.NIVEL_MEDIO, value.UNIVERSITARIOS)
 
     db_conn.commit()
     return f'Inserted {count} registries in {batch_count} batches, error #: {errors}'

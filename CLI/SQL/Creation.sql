@@ -1,64 +1,134 @@
 
-CREATE TABLE IF NOT EXISTS practica1.Artist (
-  idArtist INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50) NULL,
-  PRIMARY KEY (idArtist));
+CREATE TABLE IF NOT EXISTS `DATAWAREHOUSE`.temporal (
+    nombre_eleccion varchar(100),
+    anio_eleccion   varchar(100),
+    pais            varchar(100),
+    region          varchar(100),
+    Departamento    varchar(100),
+    Municipio       varchar(100),
+    Partido         varchar(100),
+    Nombre_paritdo  varchar(100),
+    Sexo            varchar(100),
+    Raza            varchar(100),
+    Analfabetos     int,
+    Alfabetos       int,
+    Primaria        int,
+    Nivel_Medio     int,
+    Universitarios  int
+);
 
-CREATE TABLE IF NOT EXISTS practica1.Genre (
-  idGenre INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(50) NULL,
-  PRIMARY KEY (idGenre));
+create table if not exists `DATAWAREHOUSE`.Pais (
+  ID_PAIS  INT AUTO_INCREMENT,
+  nombre_pais VARCHAR(100),
+  PRIMARY KEY (ID_PAIS)
+);
 
-CREATE TABLE IF NOT EXISTS practica1.Song (
-  idSong INT NOT NULL AUTO_INCREMENT,
-  energy DECIMAL(10,4) NULL,
-  name VARCHAR(200) NOT NULL,
-  durationMs INT NULL,
-  year INT NULL,
-  explicit tinyint DEFAULT NULL,
-  popularity DECIMAL(10,4) NULL,
-  danceability DECIMAL(10,4) NULL,
-  llave INT NULL,
-  loudness DECIMAL(10,4) NULL,
-  mode DECIMAL(10,4) NULL,
-  speechiness DECIMAL(10,4) NULL,
-  accousticness DECIMAL(10,4) NULL,
-  instrumentalness DECIMAL(10,7) NULL,
-  liveness DECIMAL(10,4) NULL,
-  valence DECIMAL(10,4) NULL,
-  tempo DECIMAL(10,4) NULL,
-  Artist_idArtist INT NOT NULL,
-  Genre_idGenre INT NOT NULL,
-  PRIMARY KEY (idSong),
-  INDEX fk_Song_Artist_idx (Artist_idArtist ASC) VISIBLE,
-  INDEX fk_Song_Genre1_idx (Genre_idGenre ASC) VISIBLE,
-  CONSTRAINT fk_Song_Artist
-    FOREIGN KEY (Artist_idArtist)
-    REFERENCES practica1.Artist (idArtist)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT fk_Song_Genre1
-    FOREIGN KEY (Genre_idGenre)
-    REFERENCES practica1.Genre (idGenre)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+create table if not exists `DATAWAREHOUSE`.Region (
+  ID_Region  INT AUTO_INCREMENT,
+  nombre_Region VARCHAR(100),
+  ID_PAIS INT,
+  PRIMARY KEY (ID_Region),
+  FOREIGN KEY  (ID_PAIS) REFERENCES  `DATAWAREHOUSE`.Pais(ID_PAIS)
+);
 
-CREATE TABLE IF NOT EXISTS practica1.temporal (
-  artist VARCHAR(50) NULL DEFAULT NULL,
-  song VARCHAR(500) NULL DEFAULT NULL,
-  duration_ms INT NULL DEFAULT NULL,
-  explicit BIT(1) NULL DEFAULT NULL,
-  year INT NULL DEFAULT NULL,
-  popularity DECIMAL(10,4) NULL DEFAULT NULL,
-  danceability DECIMAL(10,4) NULL DEFAULT NULL,
-  energy DECIMAL(10,4) NULL DEFAULT NULL,
-  llave INT NULL DEFAULT NULL,
-  loudness DECIMAL(10,4) NULL DEFAULT NULL,
-  mode DECIMAL(10,4) NULL DEFAULT NULL,
-  speechiness DECIMAL(10,4) NULL DEFAULT NULL,
-  acousticness DECIMAL(10,4) NULL DEFAULT NULL,
-  instrumentalness DECIMAL(10,7) NULL DEFAULT NULL,
-  liveness DECIMAL(10,4) NULL DEFAULT NULL,
-  valence DECIMAL(10,4) NULL DEFAULT NULL,
-  tempo DECIMAL(10,4) NULL DEFAULT NULL,
-  genre VARCHAR(50) NULL DEFAULT NULL);
+create table if not exists`DATAWAREHOUSE`. Departamento (
+    ID_Departamento  INT AUTO_INCREMENT,
+  nombre_Departamento VARCHAR(100),
+  ID_REGION INT,
+  PRIMARY KEY (ID_Departamento),
+  FOREIGN KEY  (ID_REGION) REFERENCES  `DATAWAREHOUSE`.Region (ID_region)
+);
+
+create table if not exists`DATAWAREHOUSE`. Municipio (
+    ID_Municipio  INT AUTO_INCREMENT,
+  nombre_Municipio VARCHAR(100),
+  ID_departamento INT,
+  PRIMARY KEY (ID_Municipio),
+  FOREIGN KEY  (ID_departamento) REFERENCES  `DATAWAREHOUSE`.Departamento (ID_Departamento)
+);
+
+create table if not exists`DATAWAREHOUSE`.Partido (
+  ID_partido  INT AUTO_INCREMENT,
+  Nombre_Partido VARCHAR(100),
+  Partido VARCHAR(100),
+  ID_Pais INT,
+  PRIMARY KEY (ID_partido)
+);
+
+create table if not exists `DATAWAREHOUSE`.Eleccion
+(
+    ID_Eleccion  INT AUTO_INCREMENT,
+    ANIO_ELECCION VARCHAR(100),
+    TipoEleccion varchar(100),
+    id_pais      INT,
+    PRIMARY KEY (ID_Eleccion),
+    Foreign key (id_pais) references `DATAWAREHOUSE`.Pais(id_pais)
+);
+
+create table if not exists `DATAWAREHOUSE`. Sexo
+(
+    Id_Sexo   INT AUTO_INCREMENT,
+    sexo varchar(100),
+    PRIMARY KEY (Id_Sexo)
+);
+create table if not exists `DATAWAREHOUSE`.Raza
+(
+    Id_Raza   INT AUTO_INCREMENT,
+    RAZA VARCHAR(100),
+    PRIMARY KEY (Id_Raza)
+);
+
+create table if not exists `DATAWAREHOUSE`.Resultado
+(
+    Id_Resultado   INT AUTO_INCREMENT,
+    Analafabetas   INT,
+    Alfabetas      INT,
+    Primaria       INT,
+    Nivel_Medio    INT,
+    Universitarios INT,
+    Id_Municipio   INT,
+    Id_Eleccion    INT,
+    Id_Partido INT ,
+    id_raza int, id_Sexo int,
+    PRIMARY KEY (Id_Resultado),
+    Foreign key (Id_Eleccion) references `DATAWAREHOUSE`.Eleccion (ID_Eleccion),
+    Foreign key (Id_Municipio) references `DATAWAREHOUSE`.Municipio (id_municipio),
+    Foreign key (Id_Partido) references `DATAWAREHOUSE`.Partido (id_partido),
+    Foreign key (id_Sexo) references `DATAWAREHOUSE`.Sexo (id_sexo),
+    Foreign key (Id_raza ) references `DATAWAREHOUSE`.Raza (id_raza)
+);
+
+
+create table if not exists `DatamartPoblacion`.Partido (
+    ID_partido  INT AUTO_INCREMENT,
+    Nombre_Partido VARCHAR(100),
+    Partido VARCHAR(100),
+    PRIMARY KEY (ID_partido)
+);
+create table if not exists `DatamartPoblacion`.Raza
+(
+    Id_Raza   INT AUTO_INCREMENT,
+    RAZA VARCHAR(100),
+    PRIMARY KEY (Id_Raza)
+);
+create table if not exists `DatamartPoblacion`.Resultado
+(
+    Id_Resultado   INT AUTO_INCREMENT,
+    Analafabetas   INT,
+    Primaria       INT,
+    Nivel_Medio    INT,
+    Universitarios INT,
+    Id_Partido INT,
+    id_raza INT,
+    PRIMARY KEY (Id_Resultado),
+    Foreign key (Id_Partido) references `DatamartPoblacion`.Partido(id_partido),
+    Foreign key (Id_raza ) references `DatamartPoblacion`.Raza(id_raza)
+);
+
+CREATE TABLE if not exists `DatamartPartidos`.resul_de_partidos_por_region (
+    id_resultado         INTEGER NOT NULL,
+    region_id_region     INTEGER NOT NULL,
+    partido_id_partido   INTEGER NOT NULL,
+    pais_id_pais         INTEGER NOT NULL,
+    eleccion_id_eleccion INTEGER NOT NULL
+);

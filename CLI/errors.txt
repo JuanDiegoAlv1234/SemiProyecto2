@@ -1,0 +1,46 @@
+'Could not perform
+create table if not exists`DATAWAREHOUSE`.Region (
+    ID_Region  INT AUTO_INCREMENT,
+      nombre_Region VARCHAR(100),
+        ID_PAIS INT,
+          PRIMARY KEY (ID_Region),
+            FOREIGN KEY  (ID_PAIS) REFERENCES  PAIS(ID_PAIS)
+            )
+            (1824, "Failed to open the referenced table \'PAIS\'")', 'Could not perform
+            create table if not exists`DATAWAREHOUSE`. Departamento (
+                ID_Departamento  INT AUTO_INCREMENT,
+                  nombre_Departamento VARCHAR(100),
+                    ID_REGION INT,
+                      PRIMARY KEY (ID_Departamento),
+                        FOREIGN KEY  (ID_REGION) REFERENCES  region (ID_region)
+                        )
+                        (1824, "Failed to open the referenced table \'region\'")', 'Could not perform
+                        create table if not exists`DATAWAREHOUSE`. Municipio (
+                            ID_Municipio  INT AUTO_INCREMENT,
+                              nombre_Municipio VARCHAR(100),
+                                ID_departamento INT,
+                                  PRIMARY KEY (ID_Municipio),
+                                    FOREIGN KEY  (ID_departamento) REFERENCES  departamento (ID_Departamento)
+                                    )
+                                    (1824, "Failed to open the referenced table \'departamento\'")', 'Could not perform
+                                    create table if not exists `DATAWAREHOUSE`.Resultado
+                                    (
+                                        Id_Resultado   INT AUTO_INCREMENT,
+                                            Analafabetas   INT,
+                                                Alfabetas      INT,
+                                                    Primaria       INT,
+                                                        Nivel_Medio    INT,
+                                                            Universitarios INT,
+                                                                Id_Municipio   INT,
+                                                                    Id_Eleccion    INT,
+                                                                        Id_Partido INT ,
+                                                                            id_raza int, id_Sexo int,
+                                                                                PRIMARY KEY (Id_Resultado),
+                                                                                    Foreign key (Id_Eleccion) references eleccion (ID_Eleccion),
+                                                                                        Foreign key (Id_Municipio) references municipio (id_municipio),
+                                                                                            Foreign key (Id_Partido) references Partido (id_partido),
+                                                                                                Foreign key (id_Sexo) references sexo (id_sexo),
+                                                                                                    Foreign key (Id_raza ) references raza (id_raza)
+                                                                                                    )
+                                                                                                    (1824, "Failed to open the referenced table \'eleccion\'")', "Could not perform
+                                                                                                    (1065, 'Query was empty')"
